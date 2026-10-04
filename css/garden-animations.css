@@ -1,0 +1,174 @@
+/* ============================================================
+   GARDEN ANIMATIONS
+   Keyframes and entrance state classes for the bouquet.
+   ============================================================ */
+
+/* Entrance states */
+.is-building .stem {
+  animation: stem-appear 0.8s var(--delay) both;
+}
+
+.is-building .halloween-rose {
+  animation: rose-appear 1.2s var(--delay) cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.is-building .halloween-rose__head {
+  animation: rose-breathe 5s var(--phase) ease-in-out infinite;
+}
+
+.is-building .halloween-rose__particles {
+  animation: decoration-appear 0.8s calc(var(--delay) + 0.8s) both;
+}
+
+.is-building .bouquet-motion {
+  animation: bouquet-sway 7.5s 2.2s ease-in-out infinite;
+}
+
+.is-building .bouquet-wrap,
+.is-building .bouquet-foliage {
+  animation: decoration-appear 1.2s 0.5s both;
+}
+
+.is-building .bouquet-magic {
+  animation: decoration-appear 1.5s 1.7s both;
+}
+
+.is-building .ribbon {
+  animation: decoration-appear 1s 2.8s both;
+}
+
+.is-building .bouquet-pumpkin {
+  animation: decoration-appear 1s 0.2s both;
+}
+
+/* ── @keyframes ────────────────────────────────────────────── */
+@keyframes stem-appear {
+  from {
+    opacity: 0;
+    transform: rotate(var(--angle)) scaleY(0.3);
+  }
+
+  to {
+    opacity: 1;
+    transform: rotate(var(--angle)) scaleY(1);
+  }
+}
+
+@keyframes rose-appear {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -35%) scale(calc(var(--rose-scale) * 0.5))
+      rotate(calc(var(--rose-turn) - 12deg));
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(var(--rose-scale))
+      rotate(var(--rose-turn));
+  }
+}
+
+@keyframes rose-breathe {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.018);
+  }
+}
+
+@keyframes bouquet-spark {
+  0%,
+  100% {
+    opacity: 0.15;
+    transform: translateY(8px) scale(0.6);
+  }
+
+  50% {
+    opacity: 0.9;
+    transform: translateY(-10px) scale(1);
+  }
+}
+
+@keyframes bouquet-sway {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-1.1deg);
+  }
+
+  50% {
+    transform: translateY(-8px) rotate(1.1deg);
+  }
+}
+
+@keyframes petal-drift {
+  0% {
+    opacity: 0;
+    transform: rotate(var(--petal-angle)) translateY(0) rotate(0);
+  }
+
+  18% {
+    opacity: 0.85;
+  }
+
+  72% {
+    opacity: 0.5;
+  }
+
+  100% {
+    opacity: 0;
+    transform: rotate(var(--petal-angle)) translateY(calc(var(--distance) * -1))
+      translateX(12px) rotate(220deg);
+  }
+}
+
+@keyframes decoration-appear {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes lantern-light {
+  0%,
+  100% {
+    color: #ffad32;
+    filter: drop-shadow(0 0 7px #ff6328);
+    opacity: 0.9;
+  }
+
+  35% {
+    color: #ff3b20;
+    filter: drop-shadow(0 0 10px #ed201b);
+    opacity: 1;
+  }
+
+  62%,
+  72% {
+    color: #4a160e;
+    filter: drop-shadow(0 0 0 transparent);
+    opacity: 0.65;
+  }
+
+  88% {
+    color: #ffdf81;
+    filter: drop-shadow(0 0 9px #ff8b21);
+    opacity: 1;
+  }
+}
+
+@keyframes pumpkin-drift {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-7deg);
+  }
+
+  50% {
+    transform: translateY(-22px) rotate(7deg);
+  }
+}

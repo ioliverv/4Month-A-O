@@ -1,0 +1,447 @@
+/* ============================================================
+   BOUQUET
+   Bouquet container, stems, roses, particles, and wrapping.
+   ============================================================ */
+
+/* Bouquet container */
+.bouquet {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  max-width: 540px;
+  max-height: 650px;
+  min-height: 0;
+  margin: 0 auto;
+  align-self: stretch;
+}
+
+.bouquet-art {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 520px;
+  height: 590px;
+  isolation: isolate;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(var(--art-scale, 0));
+  transform-origin: center;
+}
+
+.bouquet-art::before {
+  position: absolute;
+  z-index: -1;
+  inset: 20px -10px 90px;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse,
+    #cb653122,
+    #96366316 45%,
+    transparent 70%
+  );
+  content: "";
+}
+
+.bouquet-motion {
+  position: absolute;
+  inset: 0;
+  transform-origin: 50% 91%;
+}
+
+.bouquet-stems,
+.bouquet-flowers {
+  position: absolute;
+  inset: 0;
+}
+
+.bouquet-stems {
+  z-index: 0;
+}
+
+.bouquet-flowers {
+  z-index: 3;
+}
+
+/* ── Tallos y follaje ─────────────────────────────────────── */
+.stem {
+  position: absolute;
+  width: 6px;
+  margin-left: -3px;
+  border-radius: 80% 80% 0 0;
+  background: linear-gradient(90deg, #284c31, #668d58, #35553b);
+  opacity: 0;
+  transform: rotate(var(--angle));
+  transform-origin: 50% 100%;
+}
+
+.leaf {
+  position: absolute;
+  top: 65%;
+  left: 3px;
+  width: 18px;
+  height: 43px;
+  border-radius: 100% 0 100% 0;
+  background: linear-gradient(110deg, #719763, #315f3f);
+  transform: rotate(32deg);
+  transform-origin: bottom left;
+}
+
+.leaf-other {
+  top: 79%;
+  left: -17px;
+  transform: rotate(-30deg) scaleX(-1);
+}
+
+.bouquet-foliage {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  opacity: 0;
+}
+
+.bouquet-sprig {
+  position: absolute;
+  width: 3px;
+  height: 105px;
+  background: linear-gradient(#ac9861, #384c43);
+  transform-origin: bottom;
+}
+
+.bouquet-sprig i {
+  position: absolute;
+  top: 14px;
+  left: 1px;
+  width: 24px;
+  height: 43px;
+  border-radius: 100% 0 100% 0;
+  background: linear-gradient(125deg, #a29260, #5d7058 48%, #263d35);
+  box-shadow: inset 1px 0 #cbb08066;
+  transform: rotate(20deg);
+  transform-origin: bottom left;
+}
+
+.bouquet-sprig i:nth-child(2) {
+  top: 32px;
+  left: -23px;
+  transform: rotate(-20deg) scaleX(-1);
+}
+
+.bouquet-sprig i:nth-child(3) {
+  top: 55px;
+  width: 19px;
+  height: 33px;
+}
+
+.bouquet-sprig i:nth-child(4) {
+  top: -13px;
+  width: 18px;
+  height: 32px;
+}
+
+.bouquet-sprig b {
+  position: absolute;
+  top: -17px;
+  left: -4px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #d69d62;
+  box-shadow:
+    9px 9px #974c61,
+    -8px 11px #d7ac72;
+}
+
+/* ── Rosas ────────────────────────────────────────────────── */
+.halloween-rose {
+  --tip: #ec6a81;
+  --middle: #a62347;
+  --base: #350d29;
+
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  filter: drop-shadow(0 9px 9px #10081580);
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(var(--rose-scale))
+    rotate(var(--rose-turn));
+}
+
+.halloween-rose--pumpkin {
+  --tip: #ffc183;
+  --middle: #e07732;
+  --base: #752339;
+}
+
+.halloween-rose--violet {
+  --tip: #c091e8;
+  --middle: #71429b;
+  --base: #241335;
+}
+
+.halloween-rose--moon {
+  --tip: #fff6df;
+  --middle: #e4c5a7;
+  --base: #987082;
+}
+
+.halloween-rose__head {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.halloween-rose__petal {
+  position: absolute;
+  top: -14px;
+  left: -14px;
+  width: 64px;
+  height: 64px;
+  border-radius: 7px 55% 48% 55%;
+  background: radial-gradient(
+    circle at 100% 100%,
+    var(--base) 8%,
+    var(--middle) 54%,
+    var(--tip)
+  );
+  box-shadow:
+    inset 2px 3px 6px #fff3e52b,
+    inset -2px -2px 4px #18091c26,
+    2px 3px 6px #10071770;
+  transform: rotate(var(--petal-angle));
+  transform-origin: bottom right;
+}
+
+.halloween-rose__petal--1 {
+  top: 3px;
+  left: 3px;
+  width: 47px;
+  height: 47px;
+  border-radius: 5px 52% 45% 55%;
+}
+
+.halloween-rose__petal--2 {
+  top: 19px;
+  left: 19px;
+  width: 31px;
+  height: 31px;
+  border-radius: 4px 55% 42% 58%;
+}
+
+.halloween-rose__center {
+  position: absolute;
+  top: 38px;
+  left: 38px;
+  width: 24px;
+  height: 24px;
+  overflow: hidden;
+  border-radius: 50%;
+  background: radial-gradient(circle at 25% 25%, var(--middle), var(--base));
+  box-shadow: inset -3px -3px 7px #18071680;
+}
+
+.halloween-rose__center::before,
+.halloween-rose__center::after {
+  position: absolute;
+  width: 16px;
+  height: 17px;
+  border-radius: 45% 60% 45% 60%;
+  background: linear-gradient(
+    135deg,
+    var(--tip),
+    var(--middle) 65%,
+    var(--base)
+  );
+  box-shadow: 1px 2px 3px #17091980;
+  content: "";
+}
+
+.halloween-rose__center::before {
+  top: -2px;
+  left: -1px;
+  transform: rotate(-25deg);
+}
+
+.halloween-rose__center::after {
+  right: -2px;
+  bottom: -4px;
+  transform: rotate(35deg);
+}
+
+/* ── Partículas de flor ───────────────────────────────────── */
+.halloween-rose__particles {
+  position: absolute;
+  z-index: 4;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.halloween-rose__particles i {
+  position: absolute;
+  top: 48px;
+  left: 48px;
+  width: var(--size);
+  height: calc(var(--size) * 1.45);
+  border-radius: 70% 10% 70% 10%;
+  background: linear-gradient(
+    135deg,
+    #fff8dc 0 8%,
+    var(--tip) 24%,
+    var(--middle) 65%,
+    var(--base)
+  );
+  box-shadow:
+    inset 1px 1px 2px #fff8,
+    0 2px 4px #18091c75,
+    0 0 7px color-mix(in srgb, var(--tip) 45%, transparent);
+  animation: petal-drift var(--flight) var(--phase) ease-in-out infinite;
+  transform-origin: 50% 100%;
+}
+
+.halloween-rose__particles i:nth-child(3n) {
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 30% 28%,
+    #fff9dc,
+    var(--tip) 35%,
+    var(--middle) 72%
+  );
+}
+
+.halloween-rose__particles i:nth-child(4n) {
+  width: calc(var(--size) * 0.8);
+  height: calc(var(--size) * 0.8);
+  border-radius: 0;
+  background: #ffe6a2;
+  box-shadow: 0 0 8px 2px #f2a85d90;
+  clip-path: polygon(
+    50% 0,
+    62% 38%,
+    100% 50%,
+    62% 62%,
+    50% 100%,
+    38% 62%,
+    0 50%,
+    38% 38%
+  );
+}
+
+/* ── Envoltura y accesorios ───────────────────────────────── */
+.bouquet-wrap {
+  position: absolute;
+  z-index: 2;
+  top: 338px;
+  left: 132px;
+  width: 258px;
+  height: 219px;
+  background: linear-gradient(
+    115deg,
+    #5b3f54,
+    #201c30 40%,
+    #423044 65%,
+    #171a29
+  );
+  clip-path: polygon(0 0, 49% 24%, 100% 0, 68% 100%, 32% 100%);
+  opacity: 0;
+}
+
+.bouquet-wrap::before {
+  position: absolute;
+  inset: 7px 8px;
+  border: 1px solid #c995666b;
+  content: "";
+  transform: rotate(-12deg);
+}
+
+.bouquet-wrap__fold {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, #9c71814d, #181828);
+  clip-path: polygon(0 0, 60% 30%, 42% 100%);
+}
+
+.bouquet-wrap span {
+  position: absolute;
+  top: 113px;
+  left: 121px;
+  color: #dbb47f;
+  font-size: 19px;
+}
+
+.ribbon {
+  position: absolute;
+  z-index: 4;
+  top: 488px;
+  left: 50%;
+  display: grid;
+  width: 125px;
+  height: 36px;
+  place-items: center;
+  border: 1px solid #e0ab6b85;
+  border-radius: 7px 16px 7px 16px;
+  background: linear-gradient(125deg, #bd733b, #744133 48%, #d49557);
+  box-shadow: 0 5px 15px #1f092c80;
+  opacity: 0;
+  transform: translateX(-50%) rotate(-5deg);
+}
+
+.ribbon::before,
+.ribbon::after {
+  position: absolute;
+  z-index: -1;
+  top: 23px;
+  width: 26px;
+  height: 44px;
+  background: linear-gradient(90deg, #995434, #d39559, #744133);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 79%, 0 100%);
+  content: "";
+}
+
+.ribbon::before {
+  left: 21px;
+  transform: rotate(19deg);
+}
+
+.ribbon::after {
+  right: 19px;
+  transform: rotate(-23deg);
+}
+
+.ribbon span {
+  color: #ffe8d0;
+  font-family: Parisienne, cursive;
+  font-size: 25px;
+}
+
+/* ── Destellos mágicos ────────────────────────────────────── */
+.bouquet-magic {
+  position: absolute;
+  z-index: 5;
+  inset: 0;
+  opacity: 0;
+}
+
+.bouquet-magic i {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #ffe3a1;
+  box-shadow: 0 0 8px 2px #eaae6455;
+  animation: bouquet-spark var(--flight) var(--phase) ease-in-out infinite;
+}
+
+.bouquet-magic i:nth-child(3n) {
+  width: 9px;
+  height: 9px;
+  border-radius: 0;
+  clip-path: polygon(
+    50% 0,
+    61% 39%,
+    100% 50%,
+    61% 61%,
+    50% 100%,
+    39% 61%,
+    0 50%,
+    39% 39%
+  );
+}

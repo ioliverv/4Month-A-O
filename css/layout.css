@@ -1,0 +1,156 @@
+/* ============================================================
+   LAYOUT
+   Navigation, header brand, main experience, and scenes.
+   ============================================================ */
+
+/* Navigation */
+.back-link {
+  position: fixed;
+  z-index: 20;
+  top: 24px;
+  left: 28px;
+  color: #fff1d4;
+  font-size: 0.78rem;
+  text-decoration: none;
+  letter-spacing: 0.03em;
+  opacity: 0.8;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.back-link:hover {
+  opacity: 1;
+  transform: translateX(-2px);
+}
+
+/* Header */
+.brand {
+  position: fixed;
+  z-index: 4;
+  top: clamp(68px, 11vh, 108px);
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  white-space: nowrap;
+}
+.brand p {
+  margin: 0;
+  font-family: "Creepster", fantasy;
+  font-size: clamp(2.4rem, 5vw, 4.4rem);
+  font-weight: 400;
+  letter-spacing: 0.07em;
+  line-height: 1.1;
+  background: linear-gradient(#ffe2ae 12%, #f0aa67 58%, #b95540);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 3px 0 #542d35) drop-shadow(0 0 24px #dc854530);
+}
+.brand p span {
+  font-size: 0.65em;
+  vertical-align: middle;
+}
+.brand > span {
+  display: block;
+  margin-top: 8px;
+  color: #d9b69e;
+  font-size: 0.58rem;
+  letter-spacing: 0.38em;
+}
+
+/* Main experience container (cinematic, full-height) */
+.experience {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  height: 100svh;
+  min-height: 0;
+  overflow: hidden;
+  padding: clamp(82px, 11vh, 104px) clamp(18px, 4vw, 56px)
+    clamp(16px, 3vh, 28px);
+}
+
+/* Scene base */
+.scene {
+  display: none;
+  width: min(100%, 1040px);
+  height: 100%;
+  min-height: 0;
+  max-height: 100%;
+  overflow: hidden;
+  animation: reveal 0.75s both;
+}
+.scene.is-active {
+  display: grid;
+}
+.scene.is-exiting {
+  animation: scene-fade-out 0.75s cubic-bezier(0.4, 0, 0.2, 1) forwards !important;
+  pointer-events: none;
+}
+
+@keyframes scene-fade-out {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-24px) scale(0.95);
+    filter: blur(8px);
+  }
+}
+
+/* Scene alignment helpers */
+.intro-scene,
+.wish-scene,
+.bouquet-scene,
+.letter-scene,
+.final-scene {
+  align-content: center;
+}
+.wish-scene,
+.letter-scene,
+.final-scene {
+  place-items: center;
+}
+.letter-scene {
+  padding-block: 16px;
+}
+
+/* Eyebrow label */
+.eyebrow {
+  margin: 0 0 18px;
+  color: var(--gold);
+  font-size: clamp(0.66rem, 1.2vw, 0.82rem);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+
+/* Typography overrides for Halloween theme */
+.brand p,
+.eyebrow,
+.scene-card h2,
+.bouquet-copy h2,
+.final-card h2,
+.letter-card h2,
+.final-line,
+.signature span {
+  font-family: "Creepster", fantasy;
+  letter-spacing: 0.035em;
+}
+.primary-button,
+.secondary-button,
+.text-button,
+.back-link,
+.counter strong {
+  font-family: "Creepster", fantasy;
+  letter-spacing: 0.035em;
+}
+.intro-scene h1,
+h2 {
+  margin: 0;
+  font-family: "Creepster", fantasy;
+  font-weight: 400;
+  letter-spacing: 0.025em;
+}

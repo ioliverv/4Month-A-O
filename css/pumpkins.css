@@ -1,0 +1,126 @@
+/* ============================================================
+   PUMPKINS
+   Jack-o'-lantern base, ribs, facial features, and animations.
+   ============================================================ */
+
+/* Pumpkin base */
+.jack-o-lantern {
+  position: absolute;
+  width: var(--size, 90px);
+  height: calc(var(--size, 90px) * 0.78);
+  border-radius: 47%;
+  background: radial-gradient(
+    ellipse at 35% 20%,
+    #ffd083,
+    #eb873b 45%,
+    #993d27
+  );
+  box-shadow:
+    inset 3px 3px 6px #ffd88665,
+    inset -5px -5px 9px #61232888,
+    0 7px 14px #08061370;
+}
+
+.pumpkin-rib {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  border: 1px solid #71332460;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse at 30% 16%,
+    #ffc775,
+    #df7833 50%,
+    #913823
+  );
+}
+
+.rib-left {
+  left: 4%;
+  width: 52%;
+}
+
+.rib-right {
+  right: 4%;
+  width: 52%;
+}
+
+.rib-center {
+  left: 29%;
+  width: 42%;
+  background: radial-gradient(
+    ellipse at 30% 16%,
+    #ffd58c,
+    #ed903f 45%,
+    #ad4828
+  );
+}
+
+.pumpkin-stalk {
+  position: absolute;
+  top: -25%;
+  left: 46%;
+  width: 14%;
+  height: 32%;
+  border-radius: 70% 0 40% 10%;
+  background: linear-gradient(90deg, #35432c, #87965d, #465435);
+  transform: rotate(16deg);
+}
+
+.pumpkin-face {
+  position: absolute;
+  inset: 0;
+  color: #ffbf52;
+  filter: drop-shadow(0 0 6px #ff6328);
+  animation: lantern-light var(--glow-time, 5s) var(--phase, 0s) ease-in-out
+    infinite;
+}
+
+.pumpkin-eye {
+  position: absolute;
+  top: 32%;
+  width: 25%;
+  height: 23%;
+  background: currentColor;
+}
+
+.eye-left {
+  left: 17%;
+  clip-path: polygon(75% 0, 100% 100%, 0 85%);
+}
+
+.eye-right {
+  right: 17%;
+  clip-path: polygon(25% 0, 100% 85%, 0 100%);
+}
+
+.pumpkin-mouth {
+  position: absolute;
+  top: 62%;
+  left: 20%;
+  width: 60%;
+  height: 24%;
+  background: currentColor;
+  clip-path: polygon(
+    0 0,
+    23% 28%,
+    31% 9%,
+    46% 41%,
+    62% 10%,
+    73% 29%,
+    100% 0,
+    83% 72%,
+    55% 100%,
+    29% 83%
+  );
+}
+
+.bouquet-pumpkin {
+  z-index: 4;
+  opacity: 0;
+}
+
+.floating-pumpkin {
+  opacity: 0.78;
+  animation: pumpkin-drift var(--flight) var(--phase) ease-in-out infinite;
+}

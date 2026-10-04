@@ -1,0 +1,233 @@
+/* ============================================================
+   BACKGROUND
+   Night sky, lunar scene, drifting clouds, stars, and horizon.
+   ============================================================ */
+
+/* Fixed ambient container */
+.night-sky {
+  min-height: 100svh;
+}
+.night-sky {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Halloween background overlay */
+.halloween-background {
+  position: fixed;
+  z-index: 0;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Moon */
+.lunar-scene {
+  position: absolute;
+  top: 13%;
+  right: 6%;
+  width: clamp(180px, 22vw, 310px);
+  aspect-ratio: 1;
+  isolation: isolate;
+}
+.lunar-scene::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: -65%;
+  background: radial-gradient(
+    circle,
+    #eee4ce24 0 20%,
+    #afa3c214 39%,
+    transparent 66%
+  );
+}
+.moon {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: url("../assets/halloween-moon.svg") center / contain no-repeat;
+  filter: drop-shadow(0 0 12px #e7dec133);
+}
+.moon::after {
+  content: "";
+  position: absolute;
+  inset: 2%;
+  border-radius: 50%;
+  box-shadow:
+    0 0 28px #e7ddc326,
+    0 0 70px #d8c3c21a;
+}
+
+/* Lunar clouds */
+.moon-cloud {
+  position: absolute;
+  z-index: 1;
+  width: 230%;
+  height: 75%;
+  left: -65%;
+  background: url("../assets/night-cloud.svg") center / 100% 100% no-repeat;
+  pointer-events: none;
+  animation: lunar-cloud-drift var(--drift-duration, 32s)
+    var(--drift-phase, -10s) linear infinite;
+}
+.moon-cloud--back {
+  top: -7%;
+  --drift-duration: 46s;
+  --drift-phase: -29s;
+  --cloud-opacity: 0.64;
+}
+.moon-cloud--front {
+  top: 37%;
+  --drift-duration: 32s;
+  --drift-phase: -12s;
+  --cloud-opacity: 0.91;
+}
+.moon-cloud--veil {
+  top: 68%;
+  height: 36%;
+  --drift-duration: 39s;
+  --drift-phase: -24s;
+  --cloud-opacity: 0.52;
+}
+@keyframes lunar-cloud-drift {
+  0% {
+    transform: translate3d(-35%, 0, 0);
+    opacity: 0;
+  }
+  14%,
+  84% {
+    opacity: var(--cloud-opacity);
+  }
+  100% {
+    transform: translate3d(35%, -6%, 0);
+    opacity: 0;
+  }
+}
+
+/* Horizontal clouds */
+.cloud {
+  position: absolute;
+  height: 160px;
+  width: min(680px, 95vw);
+  background: url("../assets/night-cloud.svg") center / contain no-repeat;
+  opacity: 0.35;
+  animation: horizon-mist 48s ease-in-out infinite alternate;
+}
+.cloud-one {
+  top: 30%;
+  right: -18%;
+}
+.cloud-two {
+  bottom: 0;
+  left: -12%;
+  opacity: 0.45;
+  animation-delay: -22s;
+}
+@keyframes horizon-mist {
+  from {
+    transform: translate3d(-12%, 0, 0);
+  }
+  to {
+    transform: translate3d(20%, -12px, 0);
+  }
+}
+
+/* Horizon */
+.horizon {
+  position: absolute;
+  right: -10%;
+  bottom: -15%;
+  left: -10%;
+  height: 36%;
+  border-radius: 48% 48% 0 0;
+  background:
+    linear-gradient(#17122815, #100b1f98),
+    repeating-linear-gradient(90deg, transparent 0 38px, #0d0b1870 39px 41px);
+  opacity: 0.4;
+}
+
+/* Stars */
+.stars {
+  position: absolute;
+  inset: 0;
+}
+.star {
+  position: absolute;
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+  background: #fff8dc;
+  box-shadow: 0 0 9px #fff0bb;
+  opacity: var(--opacity);
+  animation: twinkle var(--duration) ease-in-out infinite alternate;
+}
+
+/* Background bats (instantiated by js/app.js) */
+.night-bat {
+  position: absolute;
+  z-index: 1;
+  width: var(--size);
+  aspect-ratio: 100 / 48;
+  opacity: var(--depth);
+  filter: drop-shadow(0 0 2px #e2a99eaa);
+  animation: bat-flight var(--flight) var(--phase) ease-in-out infinite alternate;
+}
+
+.night-bat svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.bat-wing,
+.bat-body {
+  fill: #281a33;
+  stroke: #a67a8a;
+  stroke-width: 0.7;
+  stroke-linejoin: round;
+}
+
+.bat-wing,
+.bat-vein {
+  transform-box: view-box;
+  transform-origin: 50% 50%;
+}
+
+.wing-left {
+  animation: bat-flap-left var(--flap) ease-in-out infinite alternate;
+}
+
+.wing-right {
+  animation: bat-flap-right var(--flap) ease-in-out infinite alternate;
+}
+
+.bat-vein {
+  fill: none;
+  stroke: #b58b9a;
+  stroke-width: 0.7;
+  opacity: 0.48;
+  pointer-events: none;
+}
+
+.bat-eye {
+  fill: #f4b480;
+}
+
+@keyframes bat-flight {
+  from { transform: translate3d(-10px, 7px, 0) rotate(calc(var(--tilt) * -1)); }
+  to { transform: translate3d(14px, -9px, 0) rotate(var(--tilt)); }
+}
+
+@keyframes bat-flap-left {
+  from { transform: rotate(-13deg) scaleY(0.7); }
+  to { transform: rotate(12deg) scaleY(1); }
+}
+
+@keyframes bat-flap-right {
+  from { transform: rotate(13deg) scaleY(0.7); }
+  to { transform: rotate(-12deg) scaleY(1); }
+}

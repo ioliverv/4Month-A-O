@@ -1,0 +1,549 @@
+/* ============================================================
+   SCENES
+   Intro, ritual wish, bouquet copy, letter, and final scene.
+   ============================================================ */
+
+/* Intro scene */
+.intro-scene {
+  max-width: 720px;
+  text-align: center;
+  justify-items: center;
+}
+.intro-scene > .eyebrow {
+  color: #e85b67;
+}
+.intro-scene h1 {
+  font-size: clamp(2.5rem, 6.2vw, 5.3rem);
+  line-height: 0.98;
+}
+.intro-scene h1 em {
+  color: #f2bc82;
+  font-weight: 500;
+}
+.intro-copy {
+  max-width: 590px;
+  margin: clamp(12px, 2vh, 18px) auto;
+  color: #f9e8d2;
+  font-family: "Creepster", fantasy;
+  font-size: clamp(0.9rem, 1.55vw, 1.08rem);
+  letter-spacing: 0.035em;
+  line-height: 1.4;
+}
+.small-note {
+  margin: 12px 0 0;
+  color: #e9c3b6;
+  font-family: "Creepster", fantasy;
+  font-size: 1.2rem;
+}
+
+/* Scene cards */
+.scene-card,
+.letter-card,
+.final-card {
+  width: min(100%, 680px);
+  max-height: 100%;
+  overflow: hidden;
+  padding: clamp(20px, 3.4vw, 40px);
+  border: 1px solid #ffe2b436;
+  border-radius: 12px;
+  background: linear-gradient(145deg, #36244eeb, #21152feb);
+  box-shadow: 0 24px 65px #08050f85;
+  text-align: center;
+  backdrop-filter: blur(12px);
+}
+.scene-card h2,
+.bouquet-copy h2,
+.final-card h2 {
+  font-size: clamp(2.15rem, 4.5vw, 3.8rem);
+  line-height: 0.98;
+}
+.scene-card > p:not(.eyebrow),
+.bouquet-copy > p:not(.eyebrow),
+.final-content > p:not(.eyebrow):not(.final-line) {
+  max-width: 490px;
+  margin-top: clamp(12px, 2vh, 18px);
+  margin-inline: auto;
+  color: #f3dfd2;
+  font-family: "Creepster", fantasy;
+  letter-spacing: 0.035em;
+  line-height: 1.48;
+}
+
+/* Wish ritual */
+.wish-scene .ritual-status {
+  font-family: "Creepster", fantasy;
+  letter-spacing: 0.035em;
+}
+.firefly-row {
+  display: flex;
+  justify-content: center;
+  gap: clamp(14px, 5vw, 44px);
+  margin: clamp(15px, 2.6vh, 22px) 0 12px;
+}
+.firefly {
+  position: relative;
+  width: 82px;
+  height: 82px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: #f9dba2;
+  transition:
+    transform 0.25s,
+    filter 0.25s;
+}
+.firefly:hover:not(:disabled) {
+  transform: translateY(-5px) rotate(-3deg);
+  filter: brightness(1.14);
+}
+.ritual-pumpkin {
+  --size: 68px;
+  top: 5px;
+  left: 7px;
+  transition:
+    transform 0.3s,
+    filter 0.3s,
+    box-shadow 0.3s;
+}
+.ritual-pumpkin .pumpkin-face {
+  color: #4a160e;
+  filter: drop-shadow(0 0 0 transparent);
+  animation: none;
+  transition:
+    color 0.3s,
+    filter 0.3s;
+}
+.firefly b {
+  position: absolute;
+  z-index: 2;
+  right: 0;
+  bottom: 0;
+  display: grid;
+  width: 23px;
+  height: 23px;
+  place-items: center;
+  border: 1px solid #ffd38d70;
+  border-radius: 50%;
+  background: #31204c;
+  font-size: 0.66rem;
+}
+.firefly.is-lit {
+  animation: pumpkin-pop 0.5s ease-out;
+}
+.firefly.is-lit .ritual-pumpkin {
+  transform: translateY(-2px) scale(1.06);
+  box-shadow:
+    inset 3px 3px 6px #ffd88665,
+    inset -5px -5px 9px #61232888,
+    0 0 17px 7px #ff9a3785,
+    0 0 42px 15px #f1683b55;
+}
+.firefly.is-lit .ritual-pumpkin .pumpkin-face {
+  color: #fff0a5;
+  filter: drop-shadow(0 0 5px #ffbf52) drop-shadow(0 0 10px #ff6f32);
+}
+.firefly.is-lit b {
+  background: #d8793d;
+  color: #321628;
+}
+@keyframes pumpkin-pop {
+  0% {
+    transform: scale(0.8);
+  }
+  65% {
+    transform: scale(1.12) rotate(5deg);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+.ritual-status {
+  min-height: 24px;
+  margin: 0;
+  color: #eebd8b;
+  font-size: 0.88rem;
+  transition: color 0.4s ease, font-size 0.4s ease, text-shadow 0.4s ease;
+}
+
+/* Wish celebration */
+.wish-scene.is-completed .scene-card {
+  border-color: #ffd27d88;
+  box-shadow: 
+    0 0 50px rgba(255, 160, 60, 0.35),
+    0 0 90px rgba(235, 100, 50, 0.2),
+    0 24px 65px #08050f85;
+  transition: border-color 0.8s ease, box-shadow 0.8s ease;
+}
+
+.wish-scene.is-completed .ritual-status {
+  color: #fff0a5;
+  font-size: 1.05rem;
+  font-weight: 500;
+  text-shadow: 0 0 12px rgba(255, 191, 82, 0.85), 0 0 24px rgba(255, 111, 50, 0.6);
+  animation: wish-status-glow 1.5s ease-in-out infinite alternate;
+}
+
+.wish-scene.is-completed .firefly.is-lit .ritual-pumpkin {
+  animation: pumpkin-celebrate 1.6s ease-in-out infinite alternate;
+}
+.wish-scene.is-completed .firefly:nth-child(1) .ritual-pumpkin {
+  animation-delay: 0s;
+}
+.wish-scene.is-completed .firefly:nth-child(2) .ritual-pumpkin {
+  animation-delay: 0.2s;
+}
+.wish-scene.is-completed .firefly:nth-child(3) .ritual-pumpkin {
+  animation-delay: 0.4s;
+}
+
+@keyframes wish-status-glow {
+  0% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  100% {
+    transform: scale(1.06);
+    filter: brightness(1.2);
+  }
+}
+
+@keyframes pumpkin-celebrate {
+  0% {
+    transform: translateY(-2px) scale(1.06);
+    filter: drop-shadow(0 0 8px rgba(255, 180, 50, 0.6));
+  }
+  100% {
+    transform: translateY(-8px) scale(1.12);
+    filter: drop-shadow(0 0 18px rgba(255, 130, 40, 0.95));
+  }
+}
+
+/* Bouquet copy */
+.bouquet-scene {
+  width: min(100%, 1200px);
+  grid-template-columns: minmax(300px, 0.92fr) minmax(340px, 1.08fr);
+  gap: clamp(18px, 4vw, 54px);
+  align-items: center;
+}
+.bouquet-copy {
+  max-width: 490px;
+  padding-block: 0;
+}
+.bouquet-copy .eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 0.65rem;
+}
+.bouquet-copy .eyebrow::before {
+  content: "";
+  width: 32px;
+  height: 1px;
+  background: #d99b65;
+}
+.bouquet-copy h2 {
+  font-size: clamp(2.3rem, 4vw, 3.7rem);
+  line-height: 1.1;
+  letter-spacing: -0.045em;
+}
+.bouquet-copy h2 em {
+  color: #f2b987;
+  font-weight: 500;
+}
+.bouquet-copy > p:not(.eyebrow) {
+  margin: 15px 0 0;
+  max-width: 405px;
+  font-size: 0.98rem;
+  line-height: 1.58;
+  color: #d7c4c7;
+}
+.bouquet-copy > .primary-button {
+  margin-top: 20px;
+}
+
+/* Letter */
+.letter-scene {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+}
+.letter-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  width: min(100%, 650px);
+  height: min(100%, 620px);
+  min-height: 0;
+  padding: clamp(26px, 4vw, 42px) clamp(30px, 4.5vw, 48px);
+  padding-left: clamp(40px, 5vw, 58px);
+  color: #f3dfbf;
+  background:
+    radial-gradient(circle at 78% 17%, #754c7659, transparent 36%),
+    radial-gradient(circle at 16% 88%, #713a5852, transparent 45%),
+    repeating-linear-gradient(42deg, #e0c5aa08 0 1px, transparent 1px 12px),
+    linear-gradient(120deg, #21152e, #35213e 44%, #21152f 100%);
+  border: 3px solid #a47d4a;
+  border-radius: 12px 23px 23px 12px;
+  box-shadow:
+    5px 5px 0 #bd9a6a,
+    9px 9px 0 #6d4c3e,
+    0 30px 80px #05030dc9,
+    inset 0 0 0 5px #120b1f,
+    inset 0 0 45px #0b0718bb;
+  text-align: left;
+}
+.letter-content {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-color: #b4945c #28182f;
+  scrollbar-width: thin;
+}
+.letter-card::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  inset: 0 auto 0 0;
+  width: 24px;
+  background: linear-gradient(90deg, #0c0815, #5b3d59 37%, #a97b62 53%, #26162f 72%, transparent);
+  border-right: 1px solid #d4aa6e70;
+  pointer-events: none;
+}
+.letter-card::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  inset: 12px 12px 12px 27px;
+  border: 1px solid #c49e6480;
+  border-radius: 3px 13px 13px 3px;
+  box-shadow: inset 0 0 0 3px #ba945121;
+  pointer-events: none;
+}
+.letter-corners {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  pointer-events: none;
+}
+.letter-corners i {
+  position: absolute;
+  width: 33px;
+  height: 33px;
+  border: 2px solid #d8b579;
+  opacity: 0.9;
+}
+.letter-corners i:nth-child(1) { top: 17px; left: 33px; border-width: 2px 0 0 2px; }
+.letter-corners i:nth-child(2) { top: 17px; right: 17px; border-width: 2px 2px 0 0; }
+.letter-corners i:nth-child(3) { bottom: 17px; left: 33px; border-width: 0 0 2px 2px; }
+.letter-corners i:nth-child(4) { bottom: 17px; right: 17px; border-width: 0 2px 2px 0; }
+.letter-emblem {
+  position: absolute;
+  z-index: 2;
+  top: 23px;
+  right: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 68px;
+  height: 68px;
+  border: 1px solid #d9b979;
+  border-radius: 50%;
+  color: #f3d591;
+  background: radial-gradient(circle at 35% 25%, #5b3d68, #21142f 68%);
+  box-shadow: 0 0 0 4px #b896584d, inset 0 0 0 5px #c9a66840, 0 0 18px #d6ac6940;
+  font-family: "Fraunces", serif;
+  pointer-events: none;
+}
+.letter-emblem span {
+  font-size: 2rem;
+  line-height: 1;
+}
+.letter-emblem small {
+  margin-top: -2px;
+  font-size: 0.52rem;
+  letter-spacing: 0.12em;
+}
+
+.letter-card h2,
+.letter-body,
+.signature,
+.text-button {
+  position: relative;
+  z-index: 1;
+}
+.letter-card h2 {
+  max-width: calc(100% - 76px);
+  margin-top: 8px;
+  color: #f4d58e;
+  font-family: "Parisienne", cursive;
+  font-size: clamp(2.4rem, 5vw, 3.5rem);
+  line-height: 1.12;
+  text-shadow: 0 0 15px #edbb6e55;
+}
+.letter-body {
+  min-height: 0;
+  margin-top: 15px;
+  color: #f3dfbf;
+  font-family: "Fraunces", Georgia, serif;
+  font-size: clamp(0.9rem, 1.25vw, 1.02rem);
+  letter-spacing: 0;
+  line-height: 1.58;
+}
+.letter-body p {
+  margin: 0 0 12px;
+}
+.letter-body p::first-letter {
+  color: #e8b977;
+  font-size: 1.25em;
+  font-weight: 700;
+}
+.letter-body p.is-typing::after {
+  content: " 🧡";
+  display: inline-block;
+  font-size: 0.9em;
+  margin-left: 4px;
+  vertical-align: -1px;
+  animation: heart-typing 0.6s ease-in-out infinite alternate;
+}
+@keyframes heart-typing {
+  0% {
+    transform: scale(0.85);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1.15);
+    opacity: 1;
+    filter: drop-shadow(0 0 6px rgba(255, 125, 40, 0.7));
+  }
+}
+.signature {
+  margin: 16px 0 0;
+  color: #dcc29f;
+  font-family: "Fraunces", Georgia, serif;
+  font-style: normal;
+  letter-spacing: 0;
+}
+.signature[hidden] {
+  display: none;
+}
+.signature span {
+  display: block;
+  margin-top: 2px;
+  font-family: Parisienne, cursive;
+  color: #f4d58e;
+  font-size: 2rem;
+}
+.letter-card .text-button {
+  margin-top: 8px;
+  border-color: #c9a66f;
+  color: #f9e4bd;
+  background: #54304c;
+  box-shadow: 0 5px 14px #0a06177a;
+}
+.letter-card .text-button:hover {
+  background: #714363;
+}
+
+/* Final scene */
+.final-scene {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+  padding-top: clamp(24px, 5svh, 48px);
+}
+.final-card {
+  width: min(100%, 720px);
+  height: auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(18px, 2.6vw, 30px);
+  transition:
+    filter 1.2s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.final-card.is-blurred {
+  filter: blur(14px) brightness(0.65);
+  opacity: 0.45;
+  user-select: none;
+  pointer-events: none;
+}
+.final-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: none;
+  min-height: 0;
+  overflow: visible;
+}
+.final-content > * {
+  flex-shrink: 0;
+}
+.final-content .eyebrow {
+  margin-bottom: clamp(5px, 1vh, 10px);
+}
+.final-content > p:not(.eyebrow):not(.final-line) {
+  max-width: 540px;
+  margin-top: 16px;
+  font-family: "DM Sans", sans-serif;
+  font-size: clamp(0.88rem, 1.3vw, 1rem);
+  letter-spacing: 0;
+  line-height: 1.45;
+}
+.final-card h2 {
+  color: #fff0cf;
+  font-size: clamp(1.8rem, min(4vw, 5.5svh), 3.2rem);
+}
+.counter {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  width: min(100%, 620px);
+  margin: 16px auto 0;
+}
+.counter > div {
+  padding: clamp(9px, 1.7vh, 14px) 6px;
+  border: 1px solid #ffe1a52d;
+  border-radius: 8px;
+  background: #140c2440;
+}
+.counter strong,
+.counter span {
+  display: block;
+}
+.counter strong {
+  color: #ffd28b;
+  font-family: Fraunces, serif;
+  font-size: clamp(1.3rem, min(3vw, 4svh), 2rem);
+}
+.counter span {
+  margin-top: 3px;
+  font-size: 0.64rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.final-line {
+  color: #f3c888;
+  font-family: Parisienne, cursive;
+  font-size: 1.75rem;
+}
+.final-content .final-line {
+  margin: 15px auto 0;
+  font-family: Parisienne, cursive;
+  letter-spacing: 0;
+}
+.final-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 11px;
+  width: min(100%, 620px);
+  flex-shrink: 0;
+  margin: 18px auto 0;
+  padding-top: 16px;
+  border-top: 1px solid #ffe1a52d;
+}

@@ -1,0 +1,67 @@
+/* ============================================================
+   GARDEN RESPONSIVE
+   Media queries for bouquet display and reduced motion.
+   ============================================================ */
+
+@media (max-width: 700px) {
+  .bouquet-scene {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr);
+    gap: 4px;
+    align-content: stretch;
+  }
+
+  .bouquet {
+    width: 100%;
+    height: 100%;
+    max-width: 400px;
+    max-height: none;
+    align-self: stretch;
+  }
+
+  .bouquet-copy {
+    margin-top: 0;
+    align-self: start;
+  }
+
+  .floating-pumpkin {
+    opacity: 0.5;
+  }
+
+  .night-bat {
+    width: calc(var(--size) * 0.8);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .night-bat,
+  .bat-wing,
+  .bat-vein,
+  .floating-pumpkin,
+  .pumpkin-face,
+  .moon-cloud,
+  .cloud,
+  .is-building .halloween-rose__head,
+  .halloween-rose__particles i,
+  .bouquet-magic i,
+  .is-building .bouquet-motion {
+    animation: none;
+  }
+
+  .moon-cloud {
+    opacity: var(--cloud-opacity);
+    transform: translateX(5%);
+  }
+
+  .is-building .stem,
+  .is-building .halloween-rose,
+  .is-building .halloween-rose__particles,
+  .is-building .ribbon,
+  .is-building .bouquet-pumpkin,
+  .is-building .bouquet-wrap,
+  .is-building .bouquet-foliage,
+  .is-building .bouquet-magic {
+    animation-delay: 0s;
+    animation-duration: 0.01ms;
+  }
+}

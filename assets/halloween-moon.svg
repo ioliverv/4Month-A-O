@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600">
+  <defs>
+    <radialGradient id="surface" cx="35%" cy="29%" r="76%">
+      <stop stop-color="#fff2b0"/><stop offset=".48" stop-color="#ffbd62"/><stop offset=".83" stop-color="#d7683d"/><stop offset="1" stop-color="#6d2338"/>
+    </radialGradient>
+    <radialGradient id="crater"><stop stop-color="#742d36" stop-opacity=".44"/><stop offset=".63" stop-color="#9d3d38" stop-opacity=".25"/><stop offset=".84" stop-color="#ffe3a0" stop-opacity=".35"/><stop offset="1" stop-color="#d76041" stop-opacity="0"/></radialGradient>
+    <radialGradient id="shade" cx="32%" cy="27%" r="77%"><stop offset=".55" stop-color="#fff0ba" stop-opacity="0"/><stop offset=".92" stop-color="#8d303c" stop-opacity=".18"/><stop offset="1" stop-color="#37152d" stop-opacity=".64"/></radialGradient>
+    <filter id="maria"><feTurbulence type="fractalNoise" baseFrequency=".017" numOctaves="4" seed="12" result="noise"/><feDisplacementMap in="SourceGraphic" in2="noise" scale="65"/><feGaussianBlur stdDeviation="1.5"/></filter>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency=".042" numOctaves="5" seed="21"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer><feFuncR type="linear" slope="1.45" intercept=".1"/><feFuncG type="linear" slope="1.45" intercept=".1"/><feFuncB type="linear" slope="1.45" intercept=".1"/></feComponentTransfer>
+      <feBlend in="SourceGraphic" mode="multiply" result="rock"/>
+      <feTurbulence type="fractalNoise" baseFrequency=".38" numOctaves="3" seed="5"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer><feFuncR type="linear" slope=".35" intercept=".325"/><feFuncG type="linear" slope=".35" intercept=".325"/><feFuncB type="linear" slope=".35" intercept=".325"/></feComponentTransfer>
+      <feBlend in="rock" mode="soft-light"/>
+    </filter>
+    <clipPath id="disc"><circle cx="300" cy="300" r="288"/></clipPath>
+  </defs>
+  <g clip-path="url(#disc)"><g filter="url(#grain)">
+    <circle cx="300" cy="300" r="288" fill="url(#surface)"/>
+    <g fill="#7b2638" opacity=".43" filter="url(#maria)">
+      <path d="M95 147Q144 75 205 111T259 200Q228 247 171 224T95 147Z"/>
+      <path d="M258 101Q306 65 350 109T362 196Q392 227 369 265T285 246Q246 218 270 179T258 101Z"/>
+      <path d="M117 260Q162 208 215 248T246 344Q219 401 157 367T117 260Z"/>
+      <path d="M380 281Q438 244 475 296T460 372Q397 407 369 354T380 281Z"/>
+      <path d="M276 379Q317 346 340 384T320 445Q280 452 267 422Z"/>
+    </g>
+    <g fill="url(#crater)">
+      <circle cx="402" cy="161" r="53"/><circle cx="169" cy="416" r="47"/><circle cx="327" cy="492" r="43"/>
+      <circle cx="449" cy="433" r="35"/><circle cx="233" cy="290" r="27"/><circle cx="90" cy="311" r="33"/>
+      <circle cx="472" cy="221" r="24"/><circle cx="377" cy="370" r="19"/><circle cx="225" cy="486" r="23"/>
+      <circle cx="298" cy="323" r="33"/><circle cx="348" cy="72" r="24"/><circle cx="126" cy="211" r="16"/>
+      <circle cx="521" cy="333" r="28"/><circle cx="213" cy="81" r="19"/><circle cx="380" cy="462" r="18"/>
+    </g>
+    <g stroke="#ffe6a0" opacity=".2" stroke-width="2" fill="none">
+      <path d="M326 490L281 402M326 490L362 379M326 490L416 450M326 490L234 537M326 490L315 568M326 490L407 550"/>
+      <circle cx="326" cy="490" r="12"/><circle cx="402" cy="160" r="22"/>
+    </g>
+    </g>
+    <circle cx="300" cy="300" r="288" fill="url(#shade)"/>
+  </g>
+</svg>

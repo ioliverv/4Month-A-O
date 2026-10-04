@@ -1,0 +1,671 @@
+/* ============================================================
+   SURPRISE
+   Interactive pumpkin growth and full-screen explosion modal.
+   ============================================================ */
+
+/* Stage container */
+.pumpkin-stage {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.6s ease, visibility 0s linear 0.6s;
+}
+
+.pumpkin-stage.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.6s ease;
+}
+
+/* Dynamic background dimming */
+.pumpkin-stage__dim {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 50% var(--dim-y, 50%),
+    rgba(255, 120, 30, calc(var(--heat, 0) * 0.18)),
+    rgba(10, 4, 20, calc(var(--heat, 0) * 0.55)) 70%
+  );
+  transition: background 0.5s ease;
+}
+
+/* Growing pumpkin button */
+.grow-pumpkin {
+  --base: clamp(64px, 15vw, 92px);
+  --grow: 1;
+  --heat: 0;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--base);
+  height: calc(var(--base) * 0.78);
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+  pointer-events: auto;
+  -webkit-tap-highlight-color: transparent;
+  transform: translate(-50%, -50%) scale(var(--grow));
+  transition:
+    transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1),
+    top 0.55s cubic-bezier(0.34, 1.3, 0.64, 1),
+    opacity 0.35s ease;
+  filter: drop-shadow(
+      0 0 calc(10px + var(--heat) * 28px)
+        rgba(255, 128, 32, calc(0.45 + var(--heat) * 0.5))
+    )
+    drop-shadow(0 0 calc(var(--heat) * 18px) rgba(190, 90, 255, 0.55));
+}
+
+.grow-pumpkin:focus-visible {
+  outline: 2px dashed #ffd28b;
+  outline-offset: 8px;
+}
+
+.grow-pumpkin.is-entering {
+  animation: grow-pumpkin-enter 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* Pumpkin body and hit/shake states */
+.grow-pumpkin__body {
+  position: absolute;
+  inset: 0;
+  animation: grow-pumpkin-idle 3.2s ease-in-out infinite;
+}
+
+.grow-pumpkin__body .jack-o-lantern {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.grow-pumpkin__body .pumpkin-face {
+  filter: drop-shadow(0 0 calc(6px + var(--heat) * 10px) #ff6328)
+    brightness(calc(1 + var(--heat) * 0.9));
+}
+
+.grow-pumpkin.is-hit .grow-pumpkin__body {
+  animation: grow-pumpkin-hit 0.45s cubic-bezier(0.3, 1.6, 0.5, 1);
+}
+
+.grow-pumpkin.is-critical .grow-pumpkin__body {
+  animation: grow-pumpkin-tremble 0.09s linear infinite;
+}
+
+/* Swelling inflation animation */
+.grow-pumpkin.is-swelling .grow-pumpkin__body {
+  animation: none;
+  will-change: transform, opacity;
+}
+
+.grow-pumpkin.is-swelling .grow-pumpkin__aura {
+  animation: none;
+  transform: scale(1.12);
+  opacity: 1;
+}
+
+.grow-pumpkin.is-swelling {
+  pointer-events: none;
+  transition: none;
+  filter: none;
+}
+
+.grow-pumpkin.is-swelling .pumpkin-face,
+.grow-pumpkin.is-swelling .grow-pumpkin__cracks path {
+  animation: none;
+  filter: none;
+}
+
+.surprise-running .night-sky *,
+.surprise-running .halloween-background * {
+  animation-play-state: paused;
+}
+
+.grow-pumpkin.is-swelling .grow-pumpkin__cracks {
+  opacity: 1;
+}
+
+.grow-pumpkin.is-swelling .grow-pumpkin__hint,
+.grow-pumpkin.is-swelling .grow-pumpkin__meter {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+/* Light cracks appearing with heat */
+.grow-pumpkin__cracks {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  opacity: calc(var(--heat) * 1.4 - 0.35);
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.grow-pumpkin__cracks path {
+  fill: none;
+  stroke: #fff2b0;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 0 3px #ffb347) drop-shadow(0 0 6px #ff7a1a);
+}
+
+/* Pulsing aura */
+.grow-pumpkin__aura {
+  position: absolute;
+  inset: -35%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 170, 60, calc(0.18 + var(--heat) * 0.35)),
+    transparent 65%
+  );
+  animation: grow-pumpkin-aura 1.6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Interactive tap hint label */
+.grow-pumpkin__hint {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  white-space: nowrap;
+  padding: 6px 14px;
+  border: 1px solid rgba(255, 210, 130, 0.5);
+  border-radius: 8px;
+  background: linear-gradient(
+    135deg,
+    rgba(52, 22, 78, 0.85),
+    rgba(196, 82, 26, 0.7)
+  );
+  color: #fff2d4;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  box-shadow:
+    0 4px 14px rgba(0, 0, 0, 0.4),
+    0 0 12px rgba(255, 150, 40, 0.35);
+  transform: translateX(-50%) scale(calc(1 / var(--grow)));
+  transform-origin: 50% 0;
+  transition: transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
+  pointer-events: none;
+}
+
+.grow-pumpkin__hint.is-pulse {
+  animation: grow-hint-pop 0.4s ease;
+}
+
+/* Magic pressure meter */
+.grow-pumpkin__meter {
+  position: absolute;
+  bottom: calc(100% + 14px);
+  left: 50%;
+  width: 70px;
+  height: 6px;
+  border-radius: 99px;
+  background: rgba(20, 10, 34, 0.75);
+  border: 1px solid rgba(255, 210, 130, 0.35);
+  overflow: hidden;
+  transform: translateX(-50%) scale(calc(1 / var(--grow)));
+  transform-origin: 50% 100%;
+  transition: transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
+  pointer-events: none;
+}
+
+.grow-pumpkin__meter i {
+  display: block;
+  height: 100%;
+  width: calc(var(--progress, 0) * 100%);
+  background: linear-gradient(90deg, #ffcc66, #ff7a1a, #c56aff);
+  box-shadow: 0 0 8px #ff9a3c;
+  transition: width 0.4s ease;
+}
+
+/* Pumpkin explosion state */
+.grow-pumpkin.is-exploding {
+  pointer-events: none;
+}
+
+.grow-pumpkin.is-exploding .grow-pumpkin__body {
+  animation: none;
+}
+
+.grow-pumpkin.is-exploding .grow-pumpkin__hint,
+.grow-pumpkin.is-exploding .grow-pumpkin__meter {
+  opacity: 0;
+}
+
+/* Fullscreen effects layer */
+.boom-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.boom-layer canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.boom-flash {
+  position: fixed;
+  inset: 0;
+  z-index: 69;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at var(--fx, 50%) var(--fy, 50%),
+    #fffbe8 0%,
+    #ffd27d 18%,
+    #ff7a1a 42%,
+    rgba(150, 50, 230, 0.85) 70%,
+    rgba(20, 6, 40, 0.6) 100%
+  );
+  animation: boom-flash 1.3s ease-out forwards;
+}
+
+.boom-ring {
+  position: fixed;
+  z-index: 71;
+  width: 60px;
+  height: 60px;
+  margin: -30px 0 0 -30px;
+  border-radius: 50%;
+  border: 6px solid var(--ring, #ffd27d);
+  box-shadow:
+    0 0 24px var(--ring, #ffd27d),
+    inset 0 0 24px var(--ring, #ffd27d);
+  pointer-events: none;
+  animation: boom-ring 1.1s cubic-bezier(0.1, 0.7, 0.3, 1) var(--delay, 0s)
+    forwards;
+  opacity: 0;
+}
+
+.boom-shake {
+  animation: boom-shake 0.7s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+}
+
+.tap-shake {
+  animation: tap-shake 0.25s ease;
+}
+
+/* Particle styles */
+.fx-particle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  user-select: none;
+  will-change: transform, opacity;
+}
+
+.fx-candy {
+  font-size: var(--size, 24px);
+  line-height: 1;
+  margin: calc(var(--size, 24px) / -2) 0 0 calc(var(--size, 24px) / -2);
+}
+
+.fx-spark {
+  width: var(--size, 8px);
+  height: var(--size, 8px);
+  margin: calc(var(--size, 8px) / -2) 0 0 calc(var(--size, 8px) / -2);
+  border-radius: 50%;
+  background: var(--color, #ffd27d);
+  box-shadow:
+    0 0 8px var(--color, #ffd27d),
+    0 0 16px var(--color, #ffd27d);
+}
+
+.fx-bat {
+  width: var(--size, 36px);
+  height: calc(var(--size, 36px) * 0.48);
+  margin: calc(var(--size, 36px) * -0.24) 0 0 calc(var(--size, 36px) / -2);
+}
+
+.fx-bat svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.fx-bat .wing {
+  fill: #1a1028;
+  stroke: #ff9e43;
+  stroke-width: 1;
+  transform-box: fill-box;
+}
+
+.fx-bat .wing-l {
+  transform-origin: 100% 40%;
+  animation: fx-flap-l 0.16s ease-in-out infinite alternate;
+}
+
+.fx-bat .wing-r {
+  transform-origin: 0% 40%;
+  animation: fx-flap-r 0.16s ease-in-out infinite alternate;
+}
+
+.fx-bat .body {
+  fill: #2a1838;
+  stroke: #ff9e43;
+  stroke-width: 1;
+}
+
+.fx-bat .eye {
+  fill: #ffcf5a;
+}
+
+/* Explosion dialog modal */
+.boom-message {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(8, 3, 18, 0.55);
+  animation: boom-message-bg 0.9s ease both;
+}
+
+.boom-message.is-leaving {
+  animation: boom-message-out 0.4s ease forwards;
+}
+
+.boom-message__card {
+  position: relative;
+  width: min(100%, 440px);
+  padding: clamp(22px, 4vw, 34px);
+  border: 1px solid rgba(255, 210, 130, 0.45);
+  border-radius: 12px;
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      rgba(255, 140, 40, 0.28),
+      transparent 60%
+    ),
+    linear-gradient(160deg, rgba(44, 18, 70, 0.92), rgba(18, 8, 32, 0.95));
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.6),
+    0 0 40px rgba(255, 130, 40, 0.3),
+    inset 0 1px 0 rgba(255, 230, 180, 0.2);
+  text-align: center;
+  animation: boom-card-in 0.7s cubic-bezier(0.18, 0.89, 0.32, 1.28) both;
+}
+
+.boom-message__icon {
+  display: block;
+  font-size: 2.6rem;
+  line-height: 1;
+  margin-bottom: 8px;
+  animation: grow-pumpkin-idle 2.4s ease-in-out infinite;
+}
+
+.boom-message__eyebrow {
+  margin: 0 0 6px;
+  color: #ffb866;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.boom-message__title {
+  margin: 0;
+  color: #fff0cf;
+  font-family: Fraunces, serif;
+  font-size: clamp(1.7rem, 5vw, 2.3rem);
+  line-height: 1.05;
+}
+
+.boom-message__text {
+  margin: 12px auto 0;
+  max-width: 340px;
+  color: #f1dcc0;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.boom-message__sign {
+  margin: 10px 0 0;
+  color: #f3c888;
+  font-family: Parisienne, cursive;
+  font-size: 1.6rem;
+}
+
+.boom-message__button {
+  margin-top: 18px;
+}
+
+/* Keyframes */
+@keyframes grow-pumpkin-enter {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.2) rotate(-25deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(var(--grow)) rotate(0deg);
+  }
+}
+
+@keyframes grow-pumpkin-idle {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  30% {
+    transform: translateY(-4px) rotate(-3deg);
+  }
+  70% {
+    transform: translateY(3px) rotate(3deg);
+  }
+}
+
+@keyframes grow-pumpkin-hit {
+  0% {
+    transform: scale(1, 1);
+  }
+  25% {
+    transform: scale(1.22, 0.8);
+  }
+  50% {
+    transform: scale(0.88, 1.15) rotate(-4deg);
+  }
+  75% {
+    transform: scale(1.06, 0.95) rotate(2deg);
+  }
+  100% {
+    transform: scale(1, 1);
+  }
+}
+
+@keyframes grow-pumpkin-tremble {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  25% {
+    transform: translate(-2px, 1px) rotate(-1.5deg);
+  }
+  50% {
+    transform: translate(2px, -1px) rotate(1.5deg);
+  }
+  75% {
+    transform: translate(-1px, -2px) rotate(-1deg);
+  }
+  100% {
+    transform: translate(1px, 2px) rotate(1deg);
+  }
+}
+
+@keyframes grow-pumpkin-aura {
+  0%,
+  100% {
+    transform: scale(0.9);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.12);
+    opacity: 1;
+  }
+}
+
+@keyframes grow-hint-pop {
+  0% {
+    filter: brightness(1);
+  }
+  40% {
+    filter: brightness(1.6);
+  }
+  100% {
+    filter: brightness(1);
+  }
+}
+
+@keyframes boom-flash {
+  0% {
+    opacity: 0.45;
+  }
+  6% {
+    opacity: 0.85;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes boom-ring {
+  0% {
+    opacity: 1;
+    transform: scale(0.2);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(var(--to, 40));
+    border-width: 1px;
+  }
+}
+
+@keyframes boom-shake {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  10% {
+    transform: translate(-12px, 6px) rotate(-0.6deg);
+  }
+  20% {
+    transform: translate(10px, -8px) rotate(0.6deg);
+  }
+  30% {
+    transform: translate(-9px, -5px);
+  }
+  45% {
+    transform: translate(7px, 6px) rotate(0.3deg);
+  }
+  60% {
+    transform: translate(-5px, 3px);
+  }
+  80% {
+    transform: translate(3px, -2px);
+  }
+}
+
+@keyframes tap-shake {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  33% {
+    transform: translate(-3px, 2px);
+  }
+  66% {
+    transform: translate(3px, -2px);
+  }
+}
+
+@keyframes fx-flap-l {
+  from {
+    transform: rotate(8deg);
+  }
+  to {
+    transform: rotate(-38deg);
+  }
+}
+
+@keyframes fx-flap-r {
+  from {
+    transform: rotate(-8deg);
+  }
+  to {
+    transform: rotate(38deg);
+  }
+}
+
+@keyframes boom-message-bg {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes boom-message-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes boom-card-in {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.85);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+  .grow-pumpkin__hint {
+    font-size: 0.74rem;
+    padding: 5px 12px;
+  }
+  .boom-message__text {
+    font-size: 0.88rem;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .grow-pumpkin__body,
+  .grow-pumpkin__aura,
+  .boom-message__icon {
+    animation: none;
+  }
+  .grow-pumpkin.is-critical .grow-pumpkin__body,
+  .grow-pumpkin.is-swelling .grow-pumpkin__body,
+  .grow-pumpkin.is-hit .grow-pumpkin__body,
+  .boom-shake,
+  .tap-shake {
+    animation: none;
+  }
+  .grow-pumpkin.is-exploding .grow-pumpkin__body {
+    animation: none;
+    opacity: 0;
+  }
+}

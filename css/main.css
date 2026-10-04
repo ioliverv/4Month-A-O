@@ -1,0 +1,34 @@
+/* ============================================================
+   MAIN STYLESHEET
+   Imports stylesheet modules in cascade order.
+   ============================================================ */
+
+/* Variables, reset, body, and shared animations */
+@import "base.css";
+
+/* Background: night sky, moon, clouds, stars, and horizon */
+@import "background.css";
+
+/* Layout: navigation, main container, brand header, and scenes */
+@import "layout.css";
+
+/* Scenes: intro, ritual, letter, bouquet copy, and final card */
+@import "scenes.css";
+
+/* Bouquet: stems, roses, particles, foliage, wrap, and ribbon */
+@import "bouquet.css";
+
+/* Pumpkins: jack-o-lantern elements, faces, and floating instances */
+@import "pumpkins.css";
+
+/* Garden animations: keyframes and building states */
+@import "garden-animations.css";
+
+/* Garden responsive: bouquet scaling and reduced motion */
+@import "garden-responsive.css";
+
+/* General responsive: layout and scene media queries */
+@import "responsive.css";
+
+/* Surprise: interactive pumpkin and Halloween explosion */
+@import "surprise.css";

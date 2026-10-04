@@ -1,0 +1,146 @@
+/* ============================================================
+   BASE
+   Variables, reset, base elements, buttons, and animations.
+   ============================================================ */
+
+/* Variables */
+:root {
+  --ink: #180f2b;
+  --plum: #31204c;
+  --wine: #7c274c;
+  --rose: #d97483;
+  --cream: #fff4dc;
+  --gold: #f4bd69;
+  --leaf: #506e56;
+}
+
+/* Reset */
+* {
+  box-sizing: border-box;
+}
+
+/* Root */
+html {
+  min-height: 100%;
+  background: var(--ink);
+}
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Body */
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  overflow-x: hidden;
+  color: var(--cream);
+  font-family: "DM Sans", sans-serif;
+  background:
+    radial-gradient(ellipse at 77% 28%, #50354b 0, transparent 43%),
+    radial-gradient(ellipse at 12% 95%, #352136 0, transparent 48%), #151020;
+}
+
+/* Base elements */
+button,
+a {
+  font: inherit;
+}
+button {
+  cursor: pointer;
+}
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid #ffdda4;
+  outline-offset: 6px;
+}
+
+/* Buttons */
+.primary-button,
+.secondary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 13px;
+  border: 0;
+  border-radius: 10px;
+  padding: 15px 23px;
+  color: #2c1730;
+  background: linear-gradient(135deg, #ffe0a7, #e9a86c);
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 11px 28px #0e081a65;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+}
+.primary-button:hover,
+.secondary-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 31px #0e081a85;
+}
+.primary-button span {
+  font-size: 1.2rem;
+  line-height: 0.6;
+}
+.primary-button {
+  min-height: 52px;
+  padding: 17px 26px;
+  border: 1px solid #ffe0b789;
+  background: linear-gradient(120deg, #ffdb9f, #edac70);
+  box-shadow:
+    0 6px 28px #eea46018,
+    0 10px 24px #0a071744;
+}
+.secondary-button {
+  color: #f9dfbb;
+  border: 1px solid #f7d49d50;
+  background: transparent;
+  box-shadow: none;
+}
+.text-button {
+  border: 1px solid #f0ac6b85;
+  border-radius: 8px;
+  padding: 9px 15px;
+  color: #ffe0aa;
+  background: #4b223d;
+  box-shadow: inset 0 0 10px #e17a4b35;
+  font-family: "Creepster", fantasy;
+  font-weight: 400;
+}
+.text-button:hover {
+  background: #71304a;
+}
+
+/* Shared animations */
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes twinkle {
+  to {
+    opacity: calc(var(--opacity) * 0.35);
+    transform: scale(0.6);
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-delay: 0s !important;
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
