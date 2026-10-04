@@ -25,6 +25,12 @@
   .brand {
     top: clamp(170px, 22vh, 220px);
   }
+
+  .experience:has(.bouquet-scene.is-active) .brand,
+  .experience:has(.letter-scene.is-active) .brand,
+  .experience:has(.final-scene.is-active) .brand {
+    top: clamp(54px, 8vh, 76px);
+  }
 }
 
 @media (max-height: 680px) and (min-width: 701px) {
@@ -63,6 +69,13 @@
   .brand {
     top: clamp(150px, 20svh, 185px);
   }
+
+  .experience:has(.bouquet-scene.is-active) .brand,
+  .experience:has(.letter-scene.is-active) .brand,
+  .experience:has(.final-scene.is-active) .brand {
+    top: clamp(44px, 6.2svh, 54px);
+  }
+
   .brand p {
     font-size: clamp(1.85rem, 8vw, 2.45rem);
   }
@@ -222,6 +235,11 @@
   }
   .brand {
     top: 130px;
+  }
+  .experience:has(.bouquet-scene.is-active) .brand,
+  .experience:has(.letter-scene.is-active) .brand,
+  .experience:has(.final-scene.is-active) .brand {
+    top: 40px;
   }
   .brand p {
     font-size: 1.7rem;
